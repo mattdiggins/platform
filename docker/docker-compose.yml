@@ -1,0 +1,27 @@
+version: '2'
+services:
+  comsul:
+    image: consul
+    command: consul agent -dev -ui -client=0.0.0.0 -bind=0.0.0.0 -server -retry-max=1
+    networks:
+      - discovery
+  web:
+    build:
+      context: ./httpd
+    image: mattdiggins/web
+    depends_on:
+      - comsul
+    ports:
+     - "80:80"
+    networks:
+      - web
+      - discovery
+      - app
+networks:
+   web:
+     driver: bridge
+   discovery:
+     driver: bridge
+   app:
+     driver: bridge
+      

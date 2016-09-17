@@ -1,1 +1,0 @@
-docker run -p8500:8500 consul agent -ui -client=0.0.0.0 -server -retry-max=1
