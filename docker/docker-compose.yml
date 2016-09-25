@@ -1,22 +1,42 @@
 version: '2'
+
 services:
-  comsul:
-    image: consul
-    command: consul agent -dev -ui -client=0.0.0.0 -bind=0.0.0.0 -server -retry-max=1
+  consul:
+    image: progrium/consul
+    command: -server -bootstrap -advertise 10.0.2.15
     networks:
       - discovery
+          
+  registrator:
+    image: gliderlabs/registrator
+    command: consul://consul:8500
+    depends_on:
+      - consul
+    networks:
+      - discovery
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    
   web:
     build:
       context: ./httpd
     image: mattdiggins/web
     depends_on:
-      - comsul
+      - consul
+      - registrator
     ports:
      - "80:80"
+    environment:
+       SERVICE_80_NAME: http
+       SERVICE_NAME: apache
+       SERVICE_TAGS: web
     networks:
       - web
       - discovery
       - app
+      
+  
+      
 networks:
    web:
      driver: bridge
