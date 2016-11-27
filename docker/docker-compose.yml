@@ -1,47 +1,75 @@
 version: '2'
 
 services:
-  consul:
-    image: progrium/consul
-    command: -server -bootstrap -advertise 10.0.2.15
-    networks:
-      - discovery
-          
-  registrator:
-    image: gliderlabs/registrator
-    command: consul://consul:8500
-    depends_on:
-      - consul
-    networks:
-      - discovery
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock
+  base:
+    build:
+      context: ./base
+    image: mattdiggins/base
     
+  amq1:
+    build:
+      context: ./activemq
+    image: mattdiggins/activemq
+    environment:
+       BROKER_NAME: amq1
+    networks:
+      - messaging
+      
+  amq2:
+    build:
+      context: ./activemq
+    image: mattdiggins/activemq
+    environment:
+       BROKER_NAME: amq2
+    networks:
+      - messaging
+      
+  amq3:
+    build:
+      context: ./activemq
+    image: mattdiggins/activemq
+    environment:
+       BROKER_NAME: amq3
+    networks:
+      - messaging
+  
   web:
     build:
       context: ./httpd
     image: mattdiggins/web
     depends_on:
-      - consul
-      - registrator
+       - base
     ports:
-     - "80:80"
+       - "80:80"
     environment:
-       SERVICE_80_NAME: http
+       SERVICE_80_NAME: http-80
        SERVICE_NAME: apache
        SERVICE_TAGS: web
     networks:
       - web
-      - discovery
       - app
-      
-  
-      
+      - messaging
+            
+  mysql:
+    image: mysql:5.6
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: platform
+      MYSQL_PASSWORD: password
+      SERVICE_3306_NAME: mysql-3306
+      SERVICE_NAME: mysql
+      SERVICE_TAGS: db
+    networks:
+      - db
+           
 networks:
    web:
      driver: bridge
-   discovery:
-     driver: bridge
    app:
      driver: bridge
-      
+   db:
+     driver: bridge
+   messaging:
+     driver: bridge

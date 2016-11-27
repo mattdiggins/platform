@@ -7,6 +7,9 @@ Add to /etc/default/docker
 
 	DOCKER_OPTS="--dns 172.17.0.1 --dns 8.8.8.8 --dns-search service.consul"
 
+## Commands
+	docker-compose up --build
+
 ## Virtual Hosts:
 
 |Host|Description|	
