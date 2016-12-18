@@ -1,0 +1,130 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<packaging>pom</packaging>
+	
+	<groupId>org.mattd</groupId>
+	<artifactId>parent-java</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<modules>
+		<module>soap-service</module>
+	</modules>
+
+	<properties>
+		<java.version>1.7</java.version>
+	
+		<maven-compiler-plugin-version>3.6.0</maven-compiler-plugin-version>
+		<maven-jaxb2-plugin-version>2.3</maven-jaxb2-plugin-version>
+		<camel-version>2.18.1</camel-version>
+		<mysql-version>6.0.5</mysql-version>
+		<logback-version>1.1.8</logback-version>
+		
+	    <spring.boot-version>1.4.2.RELEASE</spring.boot-version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-compiler-plugin</artifactId>
+		        <version>${maven-compiler-plugin-version}</version>
+		        <configuration>
+		          <source>${java.version}</source>
+		          <target>${java.version}</target>
+		        </configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>${spring.boot-version}</version>		
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	
+	<dependencies>
+		<!-- spring-web -->
+	    <dependency>
+	      <groupId>org.springframework.boot</groupId>
+	      <artifactId>spring-boot-starter</artifactId>
+	    </dependency>
+	
+	    <!-- camel -->
+	    <dependency>
+	      <groupId>org.apache.camel</groupId>
+	      <artifactId>camel-spring-boot-starter</artifactId>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.apache.camel</groupId>
+	      <artifactId>camel-stream-starter</artifactId>
+	    </dependency>
+		
+	
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jetty</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jackson</artifactId>
+		</dependency>
+	</dependencies>
+	
+	<dependencyManagement>
+		<dependencies>
+			 <dependency>
+		        <groupId>org.springframework.boot</groupId>
+		        <artifactId>spring-boot-dependencies</artifactId>
+		        <version>${spring.boot-version}</version>
+		        <type>pom</type>
+		        <scope>import</scope>
+		      </dependency>
+		      <dependency>
+		        <groupId>org.apache.camel</groupId>
+		        <artifactId>camel-spring-boot-dependencies</artifactId>
+		        <version>${camel-version}</version>
+		        <type>pom</type>
+		        <scope>import</scope>
+		      </dependency>
+			
+		
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-jpa</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-soap</artifactId>
+				<version>${camel-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-jpa</artifactId>
+				<version>${camel-version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-jaxb</artifactId>
+				<version>${camel-version}</version>
+			</dependency>
+	
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql-version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+</project>

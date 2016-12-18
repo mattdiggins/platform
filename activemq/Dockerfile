@@ -1,8 +1,10 @@
 FROM mattdiggins/base
 
 ENV BROKER_NAME test
+ENV BROKER_PEER localhost
 
 EXPOSE 61616
+EXPOSE 62002
 EXPOSE 8161
 
 RUN groupadd -r activemq && useradd -r -g activemq activemq

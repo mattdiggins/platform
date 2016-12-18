@@ -1,16 +1,11 @@
 # platform
 Microservice test project
 
-## Docker setup:
-
-Add to /etc/default/docker
-
-	DOCKER_OPTS="--dns 172.17.0.1 --dns 8.8.8.8 --dns-search service.consul"
-
 ## Commands
 	docker-compose up --build
 
 ## Virtual Hosts:
-
 |Host|Description|	
-|consul.platform|Service discovery registry|
+|amq1.local|ActiveMQ Broker 1 Web UI|
+|amq2.local|ActiveMQ Broker 1 Web UI|
+|amq3.local|ActiveMQ Broker 1 Web UI|

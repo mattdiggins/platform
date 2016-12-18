@@ -9,3 +9,14 @@ buildNumber.properties
 .mvn/timing.properties
 .project
 .settings/
+.classpath
+.settings
+/logs
+/activemq-data
+*/bin
+/.checkstyle
+*/target
+*/activemq-data
+*.epoch
+/.tmp
+.derived

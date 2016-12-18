@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SendMessageWebServiceService"
+	targetNamespace="http://soap.tsys_accounts.telrock.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:tns="http://soap.tsys_accounts.telrock.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<wsdl:types>
+		<xs:schema xmlns:tns="http://soap.tsys_accounts.telrock.com/"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified"
+			targetNamespace="http://soap.tsys_accounts.telrock.com/" version="1.0">
+
+			<xs:element name="sendMessageTemplate" type="tns:sendMessageTemplate" />
+
+			<xs:element name="sendMessageTemplateResponse" type="tns:sendMessageTemplateResponse" />
+
+			<xs:element name="sendMessageText" type="tns:sendMessageText" />
+
+			<xs:element name="sendMessageTextResponse" type="tns:sendMessageTextResponse" />
+
+			<xs:element name="validateContactAddress" type="tns:validateContactAddress" />
+
+			<xs:element name="validateContactAddressResponse" type="tns:validateContactAddressResponse" />
+
+			<xs:complexType name="validateContactAddress">
+				<xs:sequence>
+					<xs:element name="brand" type="xs:string" minOccurs="0" />
+					<xs:element name="contactAddressList">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element maxOccurs="unbounded" minOccurs="0"
+									name="contactAddress">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element minOccurs="1" name="channel"
+												type="tns:messageTypeEnum" />
+											<xs:element minOccurs="1" name="address" type="xs:string" />
+											<xs:element minOccurs="1" name="priority" type="xs:int" />
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="validateContactAddressResponse">
+				<xs:sequence>
+					<xs:element minOccurs="1" name="code" type="xs:int" />
+					<xs:element minOccurs="0" name="address" type="xs:string" />
+					<xs:element minOccurs="0" name="failureDescription"
+						type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="sendMessageTemplate">
+				<xs:sequence>
+					<xs:element name="senderId" type="xs:string" />
+					<xs:element name="recipient" type="xs:string" />
+					<xs:element name="messageTemplate" type="xs:string" />
+					<xs:element name="accountId" type="xs:string" minOccurs="0" />
+					<xs:element name="dynamicValues">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element minOccurs="0" name="key" type="xs:string" />
+											<xs:element minOccurs="0" name="value" type="xs:string" />
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element minOccurs="0" name="properties" type="tns:messageProperties" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="messageProperties">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="brand" type="xs:string" />
+					<xs:element minOccurs="0" name="channel" type="tns:messageTypeEnum" />
+					<xs:element minOccurs="0" name="sendDateTime" type="xs:dateTime" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="sendMessageTemplateResponse">
+				<xs:sequence>
+					<xs:element name="sendMessageResponse" type="tns:sendMessageResponse" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="sendMessageResponse">
+				<xs:sequence>
+					<xs:element name="code" type="xs:int" />
+					<xs:element name="messageReference" type="xs:string" />
+					<xs:element minOccurs="0" name="failureDescription"
+						type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="sendMessageText">
+				<xs:sequence>
+					<xs:element name="senderId" type="xs:string" />
+					<xs:element name="recipient" type="xs:string" />
+					<xs:element name="messageText" type="xs:string" />
+					<xs:element name="accountId" type="xs:string" minOccurs="0" />
+					<xs:element minOccurs="0" name="properties" type="tns:messageProperties" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="sendMessageTextResponse">
+				<xs:sequence>
+					<xs:element name="sendMessageResponse" type="tns:sendMessageResponse" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:simpleType name="messageTypeEnum">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="SMS" />
+					<xs:enumeration value="EMAIL" />
+					<xs:enumeration value="PUSH" />
+					<xs:enumeration value="VOICE" />
+					<xs:enumeration value="SOCIAL_MEDIA" />
+				</xs:restriction>
+			</xs:simpleType>
+
+		</xs:schema>
+	</wsdl:types>
+	
+	<wsdl:message name="sendMessageText">
+		<wsdl:part name="parameters" element="tns:sendMessageText" />
+	</wsdl:message>
+	<wsdl:message name="sendMessageTextResponse">
+		<wsdl:part name="parameters" element="tns:sendMessageTextResponse" />
+	</wsdl:message>
+	<wsdl:message name="sendMessageTemplate">
+		<wsdl:part name="parameters" element="tns:sendMessageTemplate" />
+	</wsdl:message>
+	<wsdl:message name="sendMessageTemplateResponse">
+		<wsdl:part name="parameters" element="tns:sendMessageTemplateResponse" />
+	</wsdl:message>
+	<wsdl:message name="validateContactAddress">
+		<wsdl:part name="parameters" element="tns:validateContactAddress" />
+	</wsdl:message>
+	<wsdl:message name="validateContactAddressResponse">
+		<wsdl:part name="parameters" element="tns:validateContactAddressResponse" />
+	</wsdl:message>
+	
+	<wsdl:portType name="SendMessageWebService">
+		<wsdl:operation name="sendMessageTemplate">
+			<wsdl:input name="sendMessageTemplate" message="tns:sendMessageTemplate" />
+			<wsdl:output name="sendMessageTemplateResponse" message="tns:sendMessageTemplateResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="sendMessageText">
+			<wsdl:input name="sendMessageText" message="tns:sendMessageText" />
+			<wsdl:output name="sendMessageTextResponse" message="tns:sendMessageTextResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="validateContactAddress">
+			<wsdl:input name="validateContactAddress" message="tns:validateContactAddress" />
+			<wsdl:output name="validateContactAddressResponse" message="tns:validateContactAddressResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="SendMessageWebServiceServiceSoapBinding" type="tns:SendMessageWebService">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />	
+		<wsdl:operation name="sendMessageTemplate">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="sendMessageTemplate">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="sendMessageTemplateResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="sendMessageText">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="sendMessageText">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="sendMessageTextResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="validateContactAddress">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="validateContactAddress">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="validateContactAddressResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:service name="SendMessageWebServiceService">
+		<wsdl:port name="SendMessageWebServicePort" binding="tns:SendMessageWebServiceServiceSoapBinding">
+			<soap:address location="http://localhost:9090/SendMessageWebServicePort" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
